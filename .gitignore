@@ -1,0 +1,14 @@
+node_modules
+.env
+.env.local
+.next
+dist
+coverage
+drizzle/meta
+*.tsbuildinfo
+.turbo
+*.swp
+.DS_Store
+vault.yml
+.playwright-mcp
+brave-profile

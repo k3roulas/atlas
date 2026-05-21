@@ -1,0 +1,13 @@
+{
+  "name": "@atlas/widget-autocomplete",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'placeholder - implemented in Part 4'",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

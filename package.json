@@ -1,0 +1,20 @@
+{
+  "name": "atlas",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "build": "pnpm -r run build",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "db:generate": "pnpm --filter @atlas/db generate",
+    "db:migrate": "pnpm --filter @atlas/db migrate",
+    "db:push": "pnpm --filter @atlas/db push"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.11"
+  }
+}
