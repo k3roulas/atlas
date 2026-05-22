@@ -2,7 +2,16 @@
   "$schema": "https://biomejs.dev/schemas/2.4.15/schema.json",
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": {
-    "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json", "**/*.css"]
+    "includes": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.json",
+      "**/*.css",
+      "!**/.vitepress/cache",
+      "!**/.wrangler"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -22,7 +31,10 @@
       "!**/.next",
       "!**/dist",
       "!**/drizzle",
-      "!**/pnpm-lock.yaml"
+      "!**/pnpm-lock.yaml",
+      "!**/.wrangler",
+      "!**/cache",
+      "!**/.vitepress/cache"
     ]
   },
   "linter": {

@@ -13,7 +13,7 @@ import { tenant } from './tenant.ts';
 
 const geometry = customType<{ data: string; driverData: string }>({
   dataType() {
-    return 'geometry(Geometry, 4326)';
+    return 'geometry(Geometry,4326)';
   },
 });
 

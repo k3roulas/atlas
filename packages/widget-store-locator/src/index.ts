@@ -1,2 +1,1 @@
-// Placeholder — implemented in Part 4
-export {};
+import './atlas-store-locator.ts';

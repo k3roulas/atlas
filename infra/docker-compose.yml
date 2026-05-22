@@ -27,34 +27,50 @@ services:
       timeout: 5s
       retries: 5
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+  postgres-test:
+    image: postgis/postgis:16-3.4
     ports:
-      - '9200:9200'
+      - '5433:5432'
     environment:
-      discovery.type: single-node
-      xpack.security.enabled: 'false'
-      ES_JAVA_OPTS: '-Xms512m -Xmx512m'
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
+      POSTGRES_DB: atlas_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    tmpfs:
+      - /var/lib/postgresql/data
     healthcheck:
-      test: ['CMD-SHELL', 'curl -sf http://localhost:9200/_cluster/health || exit 1']
-      interval: 10s
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
       timeout: 5s
-      retries: 10
+      retries: 5
+
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - '1025:1025'
+      - '8025:8025'
+    environment:
+      MP_MAX_MESSAGES: 500
+      MP_DATABASE: /data/mailpit.db
+    volumes:
+      - mailpitdata:/data
+    healthcheck:
+      test: ['CMD', '/mailpit', 'readycheck']
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   photon:
-    image: komoot/photon
+    image: rtuszik/photon-docker:latest
     ports:
       - '2322:2322'
     environment:
-      ELASTICSEARCH_URL: http://elasticsearch:9200
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
+      REGION: france
+    volumes:
+      - photondata:/photon/photon_data
 
   martin:
     image: maplibre/martin
+    platform: linux/amd64
     ports:
       - '3000:3000'
     environment:
@@ -63,20 +79,20 @@ services:
       postgres:
         condition: service_healthy
 
-  minio:
-    image: minio/minio
+caddy:
+    image: caddy:2-alpine
     ports:
-      - '9000:9000'
-      - '9001:9001'
-    environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      - '80:80'
     volumes:
-      - miniodata:/data
-    command: server /data --console-address ":9001"
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    depends_on:
+      martin:
+        condition: service_started
 
 volumes:
   pgdata:
   valkeydata:
-  esdata:
-  miniodata:
+  photondata:
+  mailpitdata:

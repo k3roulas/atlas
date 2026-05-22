@@ -1,0 +1,10 @@
+name = "atlas-tiles"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+[[r2_buckets]]
+binding = "BASEMAP"
+bucket_name = "basemap-tiles"
+
+[vars]
+TILES_FILE = "france.pmtiles"

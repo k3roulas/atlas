@@ -33,4 +33,6 @@ export const DEFAULT_SEARCH_RADIUS_METERS = 10_000;
 export const MAX_SEARCH_RADIUS_METERS = 100_000;
 export const MAX_BULK_IMPORT_COUNT = 1000;
 
+export const GEOLOCATION_CACHE_TTL_SECONDS = 3600;
+
 export const ATTRIBUTION = '© OpenStreetMap contributors';

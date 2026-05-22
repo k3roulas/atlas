@@ -12,3 +12,9 @@ drizzle/meta
 vault.yml
 .playwright-mcp
 brave-profile
+*.mmdb
+notes.txt
+data/
+.wrangler
+apps/docs/src/.vitepress/cache/
+apps/docs/src/.vitepress/dist/

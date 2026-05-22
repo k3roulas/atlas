@@ -27,6 +27,14 @@ pnpm check:fix        # Biome lint + format with auto-fix
 pnpm typecheck        # TypeScript check across all packages
 pnpm test             # Run all tests
 pnpm test:coverage    # Tests with coverage
+
+# Database (packages/db)
+pnpm --filter @atlas/db reset  # Drop & recreate database, enable PostGIS
+pnpm --filter @atlas/db push   # Push Drizzle schema to database (drizzle-kit push)
+pnpm --filter @atlas/db seed   # Seed dev data (tenant, API key, default map styles)
+
+# Basemap tiles (infra/workers/tiles)
+cd infra/workers/tiles && pnpm dev  # Start tiles Worker on :8787 (wrangler dev + local R2)
 ```
 
 ## Quality Gates
@@ -56,6 +64,9 @@ packages/
   db/            # Drizzle schema, migrations, DB client
   shared/        # Shared types, validators, constants
   widget-*/      # Lit web components (store-locator, autocomplete)
+infra/
+  workers/
+    tiles/       # Cloudflare Worker for basemap tile serving (PMTiles + R2)
 ```
 
 ## Conventions
@@ -72,10 +83,36 @@ packages/
 ## Development
 
 ```bash
-docker compose up    # PostGIS, Valkey, Photon (ES), Martin, MinIO
+docker compose up    # PostGIS, Valkey, Photon (ES), Martin
 pnpm dev             # Hot-reload all apps
+cd infra/workers/tiles && pnpm dev  # Start basemap tiles Worker (wrangler dev)
 ```
 
-Caddy reverse proxy routes local traffic (api.localhost, dashboard.localhost).
+Caddy reverse proxy routes local traffic (api.localhost, dashboard.localhost, tiles.localhost).
+Basemap tiles served by Cloudflare Worker locally via `wrangler dev` on port 8787, uses same code as production.
+
+### Basemap tiles setup
+
+Place a France PMTiles extract at `infra/data/pmtiles/france.pmtiles`, then upload to local R2:
+
+```bash
+# Option 1: Download a pre-built France extract (e.g. from OpenFreeMap or Geofabrik)
+
+# Option 2: Extract from a global PMTiles archive
+pmtiles extract world.pmtiles infra/data/pmtiles/france.pmtiles --bbox -5,41,10,52
+
+# Upload to local R2 store (run from infra/workers/tiles/)
+cd infra/workers/tiles && pnpm wrangler r2 object put basemap-tiles/france.pmtiles --file ../../data/pmtiles/france.pmtiles --local
+```
+
+The `pmtiles` CLI is at `~/bin/pmtiles`.
+
+### Fresh database setup
+
+```bash
+pnpm --filter @atlas/db reset && pnpm --filter @atlas/db push && pnpm --filter @atlas/db seed
+```
+
+Seeded dev API key: `ak_live_dashboard_dev_key_12345678`
 
 Do not commit - EVER

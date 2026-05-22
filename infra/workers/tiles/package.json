@@ -1,0 +1,17 @@
+{
+  "name": "@atlas/tiles-worker",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev --persist-to .wrangler/state --port 8787",
+    "deploy": "wrangler deploy",
+    "setup-local": "bash setup-local.sh"
+  },
+  "dependencies": {
+    "pmtiles": "^3.0.7"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241205.0",
+    "typescript": "^5.7.0",
+    "wrangler": "^3.99.0"
+  }
+}

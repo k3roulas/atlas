@@ -1,15 +1,19 @@
 http://api.localhost {
-	reverse_proxy localhost:3001
+	reverse_proxy host.docker.internal:3001
 }
 
 http://dashboard.localhost {
-	reverse_proxy localhost:3002
+	reverse_proxy host.docker.internal:3002
 }
 
 http://docs.localhost {
-	reverse_proxy localhost:3003
+	reverse_proxy host.docker.internal:3003
 }
 
 http://tiles.localhost {
-	reverse_proxy localhost:3000
+	reverse_proxy martin:3000
+}
+
+http://mail.localhost {
+	reverse_proxy mailpit:8025
 }

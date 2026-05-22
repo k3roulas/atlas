@@ -4,19 +4,23 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsx src/index.ts",
+    "dev": "tsx watch --env-file=../../.env src/index.ts",
+    "build": "tsx --env-file=../../.env src/index.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@atlas/db": "workspace:*",
     "@atlas/shared": "workspace:*",
+    "@hono/node-server": "^2.0.3",
     "better-auth": "^1.2.8",
     "drizzle-orm": "^0.45.2",
+    "geo-tz": "^8.1.7",
     "hono": "^4.7.0",
     "ioredis": "^5.4.0",
+    "maxmind": "^5.0.6",
     "nanoid": "^5.1.5",
-    "pg": "^8.13.3"
+    "pg": "^8.13.3",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/node": "^22.7.4",
