@@ -68,6 +68,17 @@ services:
     volumes:
       - photondata:/photon/photon_data
 
+  valhalla:
+    image: valhalla/valhalla:run-latest
+    platform: linux/amd64
+    ports:
+      - '8002:8002'
+    volumes:
+      - ./valhalla/data/tiles:/data/tiles
+      - ./valhalla/data/valhalla.json:/data/valhalla.json
+    command: ["valhalla_service", "/data/valhalla.json", "1"]
+    restart: always
+
   martin:
     image: maplibre/martin
     platform: linux/amd64
@@ -79,7 +90,7 @@ services:
       postgres:
         condition: service_healthy
 
-caddy:
+  caddy:
     image: caddy:2-alpine
     ports:
       - '80:80'

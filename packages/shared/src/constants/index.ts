@@ -35,4 +35,9 @@ export const MAX_BULK_IMPORT_COUNT = 1000;
 
 export const GEOLOCATION_CACHE_TTL_SECONDS = 3600;
 
+export const MAX_MATRIX_SIZE = 25;
+export const MAX_ISOCHRONE_RANGES = 4;
+export const MAX_ISOCHRONE_RANGE_MINUTES = 120;
+export const ROUTE_CACHE_TTL_SECONDS = 3600;
+
 export const ATTRIBUTION = '© OpenStreetMap contributors';

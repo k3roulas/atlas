@@ -4,6 +4,7 @@ import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 
+import { distance } from './modules/distance/routes.ts';
 import { geolocation } from './modules/geolocation/routes.ts';
 import { identity } from './modules/identity/routes.ts';
 import { map } from './modules/map/routes.ts';
@@ -29,6 +30,7 @@ app.get('/health', (c) => c.json({ status: 'ok' }));
 app.route('/', identity);
 app.route('/', search);
 app.route('/', geolocation);
+app.route('/', distance);
 app.route('/', stores);
 app.route('/', map);
 app.route('/', usage);

@@ -26,6 +26,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </li>
               <li>
                 <a
+                  href="/routing"
+                  className="block rounded px-3 py-2 text-gray-700 hover:bg-gray-200"
+                >
+                  Routing
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/route-to-store"
+                  className="block rounded px-3 py-2 text-gray-700 hover:bg-gray-200"
+                >
+                  Route to Store
+                </a>
+              </li>
+              <li>
+                <a
                   href="/api-keys"
                   className="block rounded px-3 py-2 text-gray-700 hover:bg-gray-200"
                 >

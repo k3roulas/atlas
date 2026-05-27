@@ -1,0 +1,83 @@
+{
+  "mjolnir": {
+    "tile_dir": "/data/tiles",
+    "concurrency": 4,
+    "admin": {
+      "enabled": true
+    },
+    "timezone": {
+      "enabled": true
+    }
+  },
+  "loki": {
+    "actions": ["locate", "route", "matrix", "isochrone"],
+    "logging": {
+      "color": false,
+      "type": "std_out"
+    },
+    "service": {
+      "proxy": "ipc:///tmp/loki"
+    },
+    "service_defaults": {
+      "minimum_reachability": 50,
+      "radius": 0
+    }
+  },
+  "odin": {
+    "logging": {
+      "color": false,
+      "type": "std_out"
+    },
+    "service": {
+      "proxy": "ipc:///tmp/odin"
+    }
+  },
+  "thor": {
+    "logging": {
+      "color": false,
+      "type": "std_out"
+    },
+    "service": {
+      "proxy": "ipc:///tmp/thor"
+    },
+    "source_to_target_algorithm": "select_optimal",
+    "isochrone": {
+      "sampling": {
+        "min": 2,
+        "max": 8
+      }
+    }
+  },
+  "service_limits": {
+    "auto": {
+      "max_distance": 5000000,
+      "max_time": 18000,
+      "max_matrix_distance": 400000,
+      "max_matrix_time": 14400
+    },
+    "bicycle": {
+      "max_distance": 1000000,
+      "max_time": 14400,
+      "max_matrix_distance": 200000,
+      "max_matrix_time": 7200
+    },
+    "pedestrian": {
+      "max_distance": 500000,
+      "max_time": 14400,
+      "max_matrix_distance": 200000,
+      "max_matrix_time": 7200
+    },
+    "truck": {
+      "max_distance": 5000000,
+      "max_time": 18000,
+      "max_matrix_distance": 400000,
+      "max_matrix_time": 14400
+    },
+    "motorcycle": {
+      "max_distance": 5000000,
+      "max_time": 18000,
+      "max_matrix_distance": 400000,
+      "max_matrix_time": 14400
+    }
+  }
+}

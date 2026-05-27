@@ -18,3 +18,5 @@ data/
 .wrangler
 apps/docs/src/.vitepress/cache/
 apps/docs/src/.vitepress/dist/
+infra/workers/tiles
+infra/valhalla/custom_files

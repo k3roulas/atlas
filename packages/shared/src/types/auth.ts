@@ -5,6 +5,7 @@ export interface ApiKeyScopes {
   stores?: boolean;
   map?: boolean;
   geolocation?: boolean;
+  distance?: boolean;
 }
 
 export interface ApiKey {
