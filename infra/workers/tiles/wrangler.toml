@@ -8,3 +8,13 @@ bucket_name = "basemap-tiles"
 
 [vars]
 TILES_FILE = "france.pmtiles"
+
+[env.production]
+name = "atlas-tiles"
+
+[[env.production.r2_buckets]]
+binding = "BASEMAP"
+bucket_name = "basemap-tiles"
+
+[env.production.vars]
+TILES_FILE = "planet.pmtiles"

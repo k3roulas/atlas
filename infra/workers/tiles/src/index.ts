@@ -44,6 +44,56 @@ const CONTENT_TYPES: Record<number, string> = {
 
 const TILE_RE = /^\/(\d+)\/(\d+)\/(\d+)\.pbf$/;
 
+const DEMO_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tiles Demo</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css">
+  <script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js"></script>
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { width: 100%; height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    const map = new maplibregl.Map({
+      container: 'map',
+      style: {
+        version: 8,
+        name: 'Tiles Demo',
+        sources: {
+          basemap: {
+            type: 'vector',
+            tiles: [window.location.origin + '/{z}/{x}/{y}.pbf'],
+            maxzoom: 12,
+            attribution: '&copy; OpenStreetMap contributors'
+          }
+        },
+        glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
+        layers: [
+          { id: 'background', type: 'background', paint: { 'background-color': '#f8f8f8' } },
+          { id: 'earth', type: 'fill', source: 'basemap', 'source-layer': 'earth', paint: { 'fill-color': '#e8e0d8' } },
+          { id: 'landuse', type: 'fill', source: 'basemap', 'source-layer': 'landuse', paint: { 'fill-color': '#e0d8c8' } },
+          { id: 'landcover', type: 'fill', source: 'basemap', 'source-layer': 'landcover', paint: { 'fill-color': '#e8e4d8', 'fill-opacity': 0.5 } },
+          { id: 'water', type: 'fill', source: 'basemap', 'source-layer': 'water', paint: { 'fill-color': '#aad3df' } },
+          { id: 'roads', type: 'line', source: 'basemap', 'source-layer': 'roads', paint: { 'line-color': '#ffffff', 'line-width': 1 } },
+          { id: 'buildings', type: 'fill', source: 'basemap', 'source-layer': 'buildings', paint: { 'fill-color': '#d9d0c9', 'fill-opacity': 0.5 } },
+          { id: 'boundaries', type: 'line', source: 'basemap', 'source-layer': 'boundaries', paint: { 'line-color': '#aaaaaa', 'line-width': 0.5, 'line-dasharray': [4, 2] } },
+          { id: 'places', type: 'symbol', source: 'basemap', 'source-layer': 'places', layout: { 'text-field': '{name}', 'text-font': ['Open Sans Semibold'], 'text-size': 12 }, paint: { 'text-color': '#333333' } }
+        ]
+      },
+      center: [2.35, 48.85],
+      zoom: 5
+    });
+    map.addControl(new maplibregl.NavigationControl());
+  </script>
+</body>
+</html>`;
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     if (request.method === 'OPTIONS') {
@@ -60,6 +110,12 @@ export default {
 
     if (pathname === '/') {
       return new Response('ok');
+    }
+
+    if (pathname === '/demo' || pathname === '/demo/') {
+      return new Response(DEMO_HTML, {
+        headers: { 'Content-Type': 'text/html; charset=utf-8' },
+      });
     }
 
     const match = pathname.match(TILE_RE);
